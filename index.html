@@ -920,20 +920,28 @@ section.content-section.dark { padding:56px 0; }
       <div class="section-tag"><span>Latest News</span></div>
       <h2 class="section-title">News & Updates</h2>
       <div class="section-subtitle" style="margin-bottom:16px;">Key milestones and announcements from PGT.</div>
-      <div class="news-grid">
-        <div class="news-card reveal">
+      <!-- Live News Feed -->
+      <div id="live-news-grid" class="news-grid" style="min-height:200px;">
+        <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray-600);">
+          <div style="font-size:24px;margin-bottom:8px;">📡</div>
+          <div>Loading latest news...</div>
+        </div>
+      </div>
+      <!-- Static Fallback -->
+      <div id="static-news-grid" class="news-grid" style="display:none;">
+        <div class="news-card">
           <div class="news-img" style="background:linear-gradient(135deg,#0a3d62,var(--teal));"><div class="news-img-icon">⚓</div></div>
-          <div class="news-body"><div class="news-date">March 2026</div><h3>ONE Adds Patimban Port Call to Semarang Service (SRG)</h3><p>Ocean Network Express enhances its Semarang Service by adding a new call at Patimban Deep Sea Port, boosting supply chain efficiency between Singapore and West Java.</p><a href="https://www.one-line.com/en/news/service-enhancement-semarang-service-srg" target="_blank" rel="noopener" class="news-link">Read More →</a></div>
+          <div class="news-body"><div class="news-date">March 2026</div><h3>ONE Adds Patimban Port Call to Semarang Service (SRG)</h3><p>Ocean Network Express enhances its Semarang Service by adding a new call at Patimban Deep Sea Port.</p><a href="https://www.one-line.com/en/news/service-enhancement-semarang-service-srg" target="_blank" rel="noopener" class="news-link">Read More →</a></div>
         </div>
-        <div class="news-card reveal">
+        <div class="news-card">
           <div class="news-img" style="background:linear-gradient(135deg,var(--navy),var(--ocean));"><div class="news-img-icon">💰</div></div>
-          <div class="news-body"><div class="news-date">April 2025</div><h3>PGT Secures USD 73.6M Financing for Terminal Superstructure</h3><p>Funds from PT Sarana Multi Infrastruktur will support STS cranes and e-RTGs, accelerating port readiness.</p><a href="https://www.worldcargonews.com/cargo-handling-equipment/2025/04/pgt-secures-us73-6m-for-cranes/" target="_blank" rel="noopener" class="news-link">Read More →</a></div>
+          <div class="news-body"><div class="news-date">April 2025</div><h3>PGT Secures USD 73.6M Financing for Terminal Superstructure</h3><p>Funds from PT Sarana Multi Infrastruktur will support STS cranes and e-RTGs.</p><a href="https://www.worldcargonews.com/cargo-handling-equipment/2025/04/pgt-secures-us73-6m-for-cranes/" target="_blank" rel="noopener" class="news-link">Read More →</a></div>
         </div>
-        <div class="news-card reveal">
+        <div class="news-card">
           <div class="news-img" style="background:linear-gradient(135deg,#063b5e,var(--teal));"><div class="news-img-icon">🤝</div></div>
           <div class="news-body"><div class="news-date">February 2025</div><h3>AGL, Toyota Tsusho & Samudera Formalize Long-Term Partnership</h3><p>The three partners commit to a 37-year development and operation contract for Patimban's container terminal.</p><a href="https://www.toyota-tsusho.com/english/press/detail/250203_006523.html" target="_blank" rel="noopener" class="news-link">Read More →</a></div>
         </div>
-        <div class="news-card reveal">
+        <div class="news-card">
           <div class="news-img" style="background:linear-gradient(135deg,var(--deep-blue),#0A4D68);"><div class="news-img-icon">🚢</div></div>
           <div class="news-body"><div class="news-date">2025</div><h3>Samudera Partners with MSC's AGL & Toyota to Operate Patimban</h3><p>Samudera Indonesia joins the consortium through its subsidiary, acquiring a 21% stake in PGT.</p><a href="https://www.samudera.id/pt-samudera-indonesia-tbk/news/patimban-global-gateway-terminal" target="_blank" rel="noopener" class="news-link">Read More →</a></div>
         </div>
@@ -1607,5 +1615,79 @@ Message:
     setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; btn.disabled = false; }, 4000);
   }
 }
+</script>
+<script>
+(async function loadPatimbanNews() {
+  const grid = document.getElementById('live-news-grid');
+  const fallback = document.getElementById('static-news-grid');
+  if (!grid) return;
+
+  const gradients = [
+    'linear-gradient(135deg,#0a3d62,#0097a7)',
+    'linear-gradient(135deg,#0d2b54,#1565c0)',
+    'linear-gradient(135deg,#063b5e,#0097a7)',
+    'linear-gradient(135deg,#0d2b54,#0A4D68)',
+    'linear-gradient(135deg,#1a237e,#0097a7)',
+    'linear-gradient(135deg,#0a3d62,#1565c0)',
+  ];
+  const icons = ['⚓','🚢','🏗️','📦','🤝','💰','🌏','📡'];
+
+  function formatDate(dateStr) {
+    try {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    } catch(e) { return ''; }
+  }
+
+  function stripHtml(str) {
+    if (!str) return '';
+    return str.replace(/<[^>]*>/g, '')
+      .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+      .replace(/&quot;/g,'"').replace(/&#39;/g,"'").trim();
+  }
+
+  function buildCard(item, i) {
+    const title = stripHtml(item.title);
+    const link = item.link || '#';
+    const date = formatDate(item.pubDate);
+    const source = stripHtml(item.source || '');
+    const raw = stripHtml(item.description || '');
+    const desc = raw.length > 120 ? raw.substring(0, 120) + '...' : raw;
+    const grad = gradients[i % gradients.length];
+    const icon = icons[i % icons.length];
+    return '<div class="news-card">'
+      + '<div class="news-img" style="background:' + grad + ';"><div class="news-img-icon">' + icon + '</div></div>'
+      + '<div class="news-body">'
+      + '<div class="news-date">' + (source ? source + ' &middot; ' : '') + date + '</div>'
+      + '<h3>' + title + '</h3>'
+      + '<p>' + desc + '</p>'
+      + '<a href="' + link + '" target="_blank" rel="noopener" class="news-link">Read More &rarr;</a>'
+      + '</div></div>';
+  }
+
+  try {
+    const query = encodeURIComponent('Patimban port');
+    const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=' + query + '&hl=en-US&gl=US&ceid=US:en');
+    const apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + rssUrl + '&count=6';
+
+    const res = await fetch(apiUrl, { signal: AbortSignal.timeout(8000) });
+    const data = await res.json();
+
+    if (data.status !== 'ok' || !data.items || data.items.length === 0) throw new Error('No items');
+
+    const cards = data.items.slice(0, 6).map(function(item, i) { return buildCard(item, i); }).join('');
+    grid.innerHTML = cards;
+
+    const note = document.createElement('p');
+    note.style.cssText = 'grid-column:1/-1;text-align:center;font-size:12px;color:#aaa;margin-top:8px;';
+    note.textContent = 'Live feed · Updated each visit · Source: Google News';
+    grid.appendChild(note);
+
+  } catch(err) {
+    console.warn('Live news failed, showing fallback:', err.message);
+    grid.style.display = 'none';
+    fallback.style.display = 'grid';
+  }
+})();
 </script></body>
 </html>
