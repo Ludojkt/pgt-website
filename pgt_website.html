@@ -1570,13 +1570,42 @@ async function submitContactForm(e) {
   const subject = form.querySelector('select') ? form.querySelector('select').value : 'General Inquiry';
   const message = form.querySelector('textarea').value;
 
-  const body = 'Name: ' + name + '%0ACompany: ' + company + '%0AEmail: ' + email + '%0APhone: ' + phone + '%0ASubject: ' + subject + '%0A%0AMessage:%0A' + encodeURIComponent(message);
-  const mailto = 'mailto:annisa.permata@pgt.id,takahiro.arai@pgt.id?subject=PGT Inquiry: ' + encodeURIComponent(subject) + '&body=' + body;
+  const payload = {
+    access_key: '55019cf7-603c-4459-b6d8-a2e0c7e1de03',
+    subject: 'PGT Website Inquiry: ' + subject,
+    from_name: name + ' (' + company + ')',
+    replyto: email,
+    to: 'annisa.permata@pgt.id,takahiro.arai@pgt.id',
+    message: 'Name: ' + name + '
+Company: ' + company + '
+Email: ' + email + '
+Phone: ' + phone + '
+Subject: ' + subject + '
 
-  window.location.href = mailto;
+Message:
+' + message
+  };
 
-  btn.textContent = 'Opening email client...';
-  setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 3000);
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await res.json();
+    if (result.success) {
+      btn.textContent = '✓ Message Sent!';
+      btn.style.background = '#28a745';
+      form.reset();
+      setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; btn.disabled = false; }, 4000);
+    } else {
+      throw new Error(result.message);
+    }
+  } catch(err) {
+    btn.textContent = 'Error — try again';
+    btn.style.background = '#dc3545';
+    setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; btn.disabled = false; }, 4000);
+  }
 }
 </script></body>
 </html>
