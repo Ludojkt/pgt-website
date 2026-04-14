@@ -809,7 +809,7 @@ section.content-section.dark { padding:56px 0; }
       <div class="section-tag"><span>Pricing Overview</span></div>
       <h2 class="section-title">Transparent & Competitive Pricing</h2>
       <div class="section-subtitle" style="margin-bottom:16px;">PGT offers competitive terminal handling charges designed to support Indonesia's trade growth. All rates are subject to applicable government regulations.</div>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:40px;max-width:800px;margin-left:auto;margin-right:auto;">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:40px;max-width:1100px;margin-left:auto;margin-right:auto;">
         <!-- Marine Service Tariff -->
         <a href="PGT_Marine_Service_Tariff_Final.pdf" download class="tariff-card reveal" style="text-decoration:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;text-align:center;">
           <div class="tariff-card-header basic" style="width:100%;padding:36px 24px;">
@@ -829,6 +829,20 @@ section.content-section.dark { padding:56px 0; }
           <div class="tariff-card-header standard" style="width:100%;padding:36px 24px;">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
             <h3>Container Handling Tariff</h3>
+            <div class="tariff-tag">PDF Document</div>
+          </div>
+          <div class="tariff-card-body" style="width:100%;padding:20px 24px;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:var(--teal);font-weight:700;font-size:15px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span data-i18n="tariff-download">Download PDF</span>
+            </div>
+          </div>
+        </a>
+        <!-- Terminal Multipurpose Tariff -->
+        <a href="PGT_Terminal_Multipurpose_Tariff_Final.pdf" download class="tariff-card reveal" style="text-decoration:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;text-align:center;">
+          <div class="tariff-card-header" style="width:100%;padding:36px 24px;background:linear-gradient(135deg,#0e4d6e 0%,#0a3550 100%);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+            <h3>Terminal Multipurpose Tariff</h3>
             <div class="tariff-tag">PDF Document</div>
           </div>
           <div class="tariff-card-body" style="width:100%;padding:20px 24px;">
@@ -1249,19 +1263,19 @@ const translations = {
   '#page-tariffs .section-subtitle': { en:'PGT offers competitive terminal handling charges designed to support Indonesia\'s trade growth. All rates are subject to applicable government regulations.', id:'PGT menawarkan biaya penanganan terminal yang kompetitif untuk mendukung pertumbuhan perdagangan Indonesia. Semua tarif tunduk pada peraturan pemerintah yang berlaku.', zh:'PGT提供具有竞争力的码头处理费，旨在支持印度尼西亚的贸易增长。所有费率均受适用的政府法规约束。' },
   // Tariff Download Cards
   '#page-tariffs .tariff-card-header h3': {
-    en:['Marine Service Tariff','Container Handling Tariff'],
-    id:['Tarif Layanan Kelautan','Tarif Penanganan Peti Kemas'],
-    zh:['海事服务费率','集装箱处理费率']
+    en:['Marine Service Tariff','Container Handling Tariff','Terminal Multipurpose Tariff'],
+    id:['Tarif Layanan Kelautan','Tarif Penanganan Peti Kemas','Tarif Terminal Multiguna'],
+    zh:['海事服务费率','集装箱处理费率','多用途码头费率']
   },
   '#page-tariffs .tariff-tag': {
-    en:['PDF Document','PDF Document'],
-    id:['Dokumen PDF','Dokumen PDF'],
-    zh:['PDF文档','PDF文档']
+    en:['PDF Document','PDF Document','PDF Document'],
+    id:['Dokumen PDF','Dokumen PDF','Dokumen PDF'],
+    zh:['PDF文档','PDF文档','PDF文档']
   },
   '[data-i18n="tariff-download"]': {
-    en:['Download PDF','Download PDF'],
-    id:['Unduh PDF','Unduh PDF'],
-    zh:['下载PDF','下载PDF']
+    en:['Download PDF','Download PDF','Download PDF'],
+    id:['Unduh PDF','Unduh PDF','Unduh PDF'],
+    zh:['下载PDF','下载PDF','下载PDF']
   },
   '.tariff-cta .btn-primary': { en:'Request Custom Quote →', id:'Minta Penawaran Khusus →', zh:'申请定制报价 →' },
 
