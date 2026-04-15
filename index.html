@@ -3207,6 +3207,10 @@ Message:
       priv.innerHTML = legalContent.privacy[lang];
       tc.innerHTML   = legalContent.terms[lang];
     }
+    // .reveal elements start at opacity:0 — force them visible after every swap
+    [priv, tc].forEach(function(c) {
+      c.querySelectorAll('.reveal').forEach(function(r) { r.classList.add('visible'); });
+    });
   };
 })();
 </script>
