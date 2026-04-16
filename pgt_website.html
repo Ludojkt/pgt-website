@@ -1835,7 +1835,7 @@ section.content-section.dark { padding:56px 0; }
       <span>&copy; 2025&ndash;2026 PT Patimban Global Gateway Terminal. All rights reserved.</span>
       <a href="javascript:void(0)" onclick="navigateTo('privacy')" style="color:rgba(255,255,255,.4);font-size:12px;text-decoration:none;transition:color .3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,.4)'">Privacy Policy</a>
       <a href="javascript:void(0)" onclick="navigateTo('terms')" style="color:rgba(255,255,255,.4);font-size:12px;text-decoration:none;transition:color .3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,.4)'">Terms &amp; Conditions</a>
-      <a id="cc-settings-link" href="javascript:void(0)" onclick="if(window.CookieConsent)CookieConsent.showPreferences()" style="color:rgba(255,255,255,.4);font-size:12px;text-decoration:none;transition:color .3s;cursor:pointer;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,.4)'">Cookie Settings</a>
+      <a id="cc-settings-link" href="javascript:void(0)" onclick="window._ccRunPromise?window._ccRunPromise.then(function(){CookieConsent.showPreferences()}):CookieConsent&&CookieConsent.showPreferences()" style="color:rgba(255,255,255,.4);font-size:12px;text-decoration:none;transition:color .3s;cursor:pointer;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,.4)'">Cookie Settings</a>
     </div>
   </div>
 </footer>
@@ -3225,7 +3225,9 @@ Message:
 (function() {
   if (!window.CookieConsent) return;
 
-  CookieConsent.run({
+  window._ccRunPromise = CookieConsent.run({
+
+    revision: 1,
 
     guiOptions: {
       consentModal: {
